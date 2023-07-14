@@ -61,7 +61,7 @@
         public int GetCharacterLevel() { return characterLevel; }
         public int GetCharacterHealth() { return characterHealth; }
         public int GetCharacterHealthMax() { return characterHealthMax; }
-        public int GetcharacterStamina() { return characterStamina; }
+        public int GetCharacterStamina() { return characterStamina; }
         public int GetCharacterStaminaMax() {  return characterStaminaMax; }
         public int GetCharacterArmourClass() {  return characterArmourClass; }
         public int GetCharacterStr() { return characterStr; }

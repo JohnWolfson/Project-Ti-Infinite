@@ -1,15 +1,19 @@
-﻿using Project_Ti_Infinite.Singletons;
-using System;
+﻿using Project_Ti_Infinite.Objects.Characters;
+using Project_Ti_Infinite.Singletons;
 
 namespace Project_Ti_Infinite
 {
-    internal class Start
+    internal class Program
     {
         static void Main(string[] args)
         {
             Terminal.Instance.Initialise();
-            Terminal.Instance.UpdatePlayerDetails();
             Console.ReadLine();
+        }
+
+        private void gameLoop()
+        {
+
         }
     }
 }

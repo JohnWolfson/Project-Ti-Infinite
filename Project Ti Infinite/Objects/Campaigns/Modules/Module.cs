@@ -2,8 +2,6 @@
 {
     public abstract class Module
     {
-
-
         public Module()
         {
 

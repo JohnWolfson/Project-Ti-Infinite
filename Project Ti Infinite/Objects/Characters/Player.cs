@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Project_Ti_Infinite.Objects.Characters
+﻿namespace Project_Ti_Infinite.Objects.Characters
 {
     public class Player : Character
     {
+        public Inventory Inventory;
+
         public Player(string name) : base(name)
         {
             this.name = name;
+            Inventory = new Inventory();
         }
+    }
+
+    public class Inventory
+    {
+        private int gold;
     }
 }

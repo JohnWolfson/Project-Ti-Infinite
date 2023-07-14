@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Project_Ti_Infinite.Objects.Characters
+﻿namespace Project_Ti_Infinite.Objects.Characters
 {
     public abstract class Character
     {
         private protected string name;
         private bool dead;
         public Stats Stats;
-        public Inventory Inventory;
 
         public Character(string name)
         {
             this.name = name;
             dead = false;
             Stats = new Stats(this);
-            Inventory = new Inventory();
         }
 
         #region Get/Sets
@@ -157,10 +148,5 @@ namespace Project_Ti_Infinite.Objects.Characters
             if (staminaMax < 7)
                 staminaMax = 7;
         }
-    }
-
-    public class Inventory
-    {
-        private int gold;
     }
 }
