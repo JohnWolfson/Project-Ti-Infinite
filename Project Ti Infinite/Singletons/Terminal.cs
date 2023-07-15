@@ -1,4 +1,5 @@
 ﻿using Project_Ti_Infinite.Objects;
+using Project_Ti_Infinite.Objects.Items;
 
 namespace Project_Ti_Infinite.Singletons
 {
@@ -216,46 +217,62 @@ namespace Project_Ti_Infinite.Singletons
             clearArea(18, 23, 4, 25);
         }
 
-        public void UpdatePlayerOptions()
+        public void UpdateOptions(List<string> options)
         {
-
+            clearArea(58, 8, 27, 41);
+            int ypos = 41;
+            int optionNum = 1;
+            foreach(string option in options)
+            {
+                if(optionNum <= 7)
+                {
+                    Console.SetCursorPosition(28, ypos);
+                    Console.Write(optionNum + ". " + option);
+                    optionNum++;
+                    ypos++;
+                }
+                else
+                {
+                    Console.SetCursorPosition(50, ypos - 7);
+                    Console.Write(optionNum + ". " + option);
+                    optionNum++;
+                    ypos++;
+                }
+            }
         }
 
-        public void UpdateStory()
+        public void UpdateStory(List<string> story)
         {
-
+            clearArea(117, 33, 27, 6);
+            int ypos = 6;
+            foreach(string paragraph in story) 
+            {
+                List<string> lines = checkStringLength(paragraph);
+                foreach(string line in lines)
+                {
+                    Console.SetCursorPosition(28, ypos);
+                    Console.Write(line);
+                    ypos++;
+                }
+            }
         }
 
         public void UpdateEvents()
         {
-
+            clearArea(60, 9, 86, 40);
         }
 
         public void UpdateFightOrder()
         {
-
+            clearArea(18, 8, 150, 8);
         }
 
         public void UpdateEnemies()
         {
-
+            clearArea(18, 7, 150, 19);
         }
 
         #endregion
-
-        private void clearArea(int width, int height, int xpos, int ypos)
-        {
-            for (int y = ypos; y < ypos + height; y++)
-            {
-                string length = "";
-                Console.SetCursorPosition(xpos, y);
-                for (int x = 0; x < width; x++)
-                {
-                    length += " ";
-                }
-                Console.Write(length);
-            }
-        }
 
         #region Input
 
@@ -288,6 +305,130 @@ namespace Project_Ti_Infinite.Singletons
                     return OptionNumber;
             }
             return 404;
+        }
+
+        public int SelectItem(List<string> items)
+        {
+            int item = 0;
+            bool done = false;
+            while (!done)
+            {
+                printSelectItem(items[item]);
+                int input = Input(4);
+                switch(input)
+                {
+                    case 1:
+                    case 2:
+                        item = changeSelectedItem(input, item, items.Count - 1);
+                        break;
+                    case 3:
+                        done = !done;
+                        break;
+                    case 4:
+                        item = -1;
+                        done = !done;
+                        break;
+                }
+            }
+            return item;
+        }
+
+        private void printSelectItem(string item)
+        {
+            clearArea(58, 8, 27, 41);
+            Console.SetCursorPosition(28, 41);
+            Console.Write(item);
+            Console.SetCursorPosition(28, 43);
+            Console.Write("1. Up");
+            Console.SetCursorPosition(28, 44);
+            Console.Write("2. Down");
+            Console.SetCursorPosition(28, 45);
+            Console.Write("3. Select Item");
+            Console.SetCursorPosition(28, 46);
+            Console.Write("4. Leave");
+        }
+
+        private int changeSelectedItem(int dir, int item, int itemMax)
+        {
+            if(dir == 1)
+            {
+                item -= 1;
+                if(item < 0)
+                {
+                    item = itemMax;
+                }
+            }
+            else
+            {
+                item += 1;
+                if(item > itemMax)
+                {
+                    item = 0;
+                }
+            }
+            return item;
+        }
+
+        #endregion
+
+        #region Misc
+
+        private void clearArea(int width, int height, int xpos, int ypos)
+        {
+            for (int y = ypos; y < ypos + height; y++)
+            {
+                string length = "";
+                Console.SetCursorPosition(xpos, y);
+                for (int x = 0; x < width; x++)
+                {
+                    length += " ";
+                }
+                Console.Write(length);
+            }
+        }
+
+        private List<string> checkStringLength(string text) // Limits the length of the string for the story box and inserts line breaks
+        {
+            List<string> lines = new List<string>();
+            bool textTooLong = true;
+            int charNum = 110;
+            while (textTooLong)
+            {
+                if(text.Length > charNum)
+                {
+                    char[] charString = text.ToCharArray();
+                    bool found = false;
+                    while (!found)
+                    {
+                        if (charString[charNum] == ' ' || charString[charNum] == '.')
+                        {
+                            char[] chars = text.ToCharArray(0, charNum);
+                            string temp = new string(chars);
+                            lines.Add(temp);
+                            if (charString[charNum] == ' ')
+                            {
+                                text = text.Substring(charNum + 1);
+                            }
+                            else
+                            {
+                                text = text.Substring(charNum);
+                            }
+                            charNum = 110;
+                            found = !found;
+                        }
+                        else 
+                        {
+                            charNum--;
+                        }
+                    }
+                }
+                else
+                {
+                    textTooLong = !textTooLong;
+                    lines.Add(text);
+                }
+            }
+            return lines;
         }
 
         #endregion
